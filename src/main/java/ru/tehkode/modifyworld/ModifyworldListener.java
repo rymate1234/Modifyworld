@@ -126,7 +126,13 @@ public abstract class ModifyworldListener implements Listener {
 
 	protected boolean permissionDenied(Player player, String basePermission, Object... arguments) {
 		String permission = assemblePermission(basePermission, arguments);
-		boolean isDenied = !player.hasPermission(permission);
+
+		// first check whether they have modifyworld.*
+		boolean isDenied = !player.hasPermission("modifyworld.*");
+
+		// then check whether anything overrides that
+		if (player.isPermissionSet(permission))
+			isDenied = !player.hasPermission(permission);
 
 		if (isDenied) {
 			this.informer.informPlayer(player, permission, arguments);
