@@ -106,24 +106,6 @@ public abstract class ModifyworldListener implements Listener {
 		return getMaterialPermission(item.getType(), item.getData().getData());
 	}
 
-	/*
-	protected boolean permissionDenied(Player player, String basePermission, Entity entity) {
-		if (entity instanceof Player && PermissionsEx.isAvailable()) {
-			PermissionUser entityUser = PermissionsEx.getUser((Player)entity);
-
-			for (PermissionGroup group : entityUser.getGroups()) {
-				if (permissionDenied(player, basePermission, "group", group.getName())) {
-					return true;
-				}
-			}
-
-			return permissionDenied(player, basePermission, "player", entityUser.getName());
-		}
-
-		return permissionDenied(player, basePermission, entity);
-	}
-	*/
-
     private boolean internalPermissionDenied(Player player, String basePermission, Object... arguments) {
         String permission = assemblePermission(basePermission, arguments);
         String wildcardBasePermission = basePermission + ".*";
@@ -145,7 +127,7 @@ public abstract class ModifyworldListener implements Listener {
 	protected boolean permissionDenied(Player player, String basePermission, Object... arguments) {
 		String permission = assemblePermission(basePermission, arguments);
 
-		boolean isDenied = internalPermissionDenied(player, basePermission, arguments);
+        boolean isDenied = internalPermissionDenied(player, basePermission, arguments);
 
 		if (isDenied) {
 			this.informer.informPlayer(player, permission, arguments);

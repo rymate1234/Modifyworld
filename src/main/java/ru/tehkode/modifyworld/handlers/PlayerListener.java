@@ -79,7 +79,6 @@ public class PlayerListener extends ModifyworldListener {
 		}
 	}
 
-
 	@EventHandler(priority = EventPriority.LOW)
 	public void onPlayerLogin(PlayerLoginEvent event) {
 		if (!enableWhitelist) {
