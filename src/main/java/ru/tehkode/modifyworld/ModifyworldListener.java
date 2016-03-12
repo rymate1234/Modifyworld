@@ -124,15 +124,28 @@ public abstract class ModifyworldListener implements Listener {
 	}
 	*/
 
+    private boolean internalPermissionDenied(Player player, String basePermission, Object... arguments) {
+        String permission = assemblePermission(basePermission, arguments);
+        String wildcardBasePermission = basePermission + ".*";
+
+        // first check whether they have modifyworld.*
+        boolean isDenied = !player.hasPermission("modifyworld.*");
+
+        // then check for basePermission wildcards
+        if (player.isPermissionSet(wildcardBasePermission))
+            isDenied = !player.hasPermission(wildcardBasePermission);
+
+        // then check for individual permissions
+        if (player.isPermissionSet(permission))
+            isDenied = !player.hasPermission(permission);
+
+        return isDenied;
+    }
+
 	protected boolean permissionDenied(Player player, String basePermission, Object... arguments) {
 		String permission = assemblePermission(basePermission, arguments);
 
-		// first check whether they have modifyworld.*
-		boolean isDenied = !player.hasPermission("modifyworld.*");
-
-		// then check whether anything overrides that
-		if (player.isPermissionSet(permission))
-			isDenied = !player.hasPermission(permission);
+		boolean isDenied = internalPermissionDenied(player, basePermission, arguments);
 
 		if (isDenied) {
 			this.informer.informPlayer(player, permission, arguments);
@@ -142,7 +155,7 @@ public abstract class ModifyworldListener implements Listener {
 	}
 
 	protected boolean _permissionDenied(Player player, String permission, Object... arguments) {
-		return !player.hasPermission(assemblePermission(permission, arguments));
+		return internalPermissionDenied(player, permission, arguments);
 	}
 
 	protected String assemblePermission(String permission, Object... arguments) {
