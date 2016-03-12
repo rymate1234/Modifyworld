@@ -10,8 +10,6 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import ru.tehkode.permissions.PermissionUser;
-import ru.tehkode.permissions.bukkit.PermissionsEx;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -97,30 +95,6 @@ public class PlayerInformer {
 	}
 
 	public String getMessagePEX(Player player, String permission) {
-		if (PermissionsEx.isAvailable()) {
-			PermissionUser user = PermissionsEx.getUser(player);
-
-			String message;
-			String perm = permission;
-			int index;
-
-			while ((index = perm.lastIndexOf(".")) != -1) {
-				perm = perm.substring(0, index);
-
-				message = user.getOption("permission-denied-" + perm, player.getWorld().getName(), null);
-				if (message == null) {
-					continue;
-				}
-
-				return message;
-			}
-
-			message = user.getOption("permission-denied", player.getWorld().getName(), null);
-
-			if (message != null) {
-				return message;
-			}
-		}
 		return null;
 	}
 

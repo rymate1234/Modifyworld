@@ -67,19 +67,15 @@
         <dependency>
             <groupId>org.bukkit</groupId>
             <artifactId>bukkit</artifactId>
-            <version>1.9-R0.1-SNAPSHOT</version>
+            <version>1.9-SNAPSHOT</version>
             <type>jar</type>
-        </dependency>
-        <dependency>
-            <groupId>ru.tehkode</groupId>
-            <artifactId>PermissionsEx</artifactId>
-            <version>1.22</version>
         </dependency>
         <dependency>
           <groupId>net.milkbowl.vault</groupId>
           <artifactId>VaultAPI</artifactId>
           <version>1.5</version>
-          <scope>provided</scope>
+          <scope>system</scope>
+          <systemPath>${project.basedir}/lib/Vault.jar</systemPath>
         </dependency>
     </dependencies>
 	  <repositories>
@@ -93,7 +89,7 @@
         </repository>
         <repository>
           <id>pex-repo</id>
-          <url>http://pex-repo.aoeu.xyz</url>
+          <url>https://pex-repo.aoeu.xyz</url>
         </repository>
     </repositories>
     <properties>
